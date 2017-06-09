@@ -9,9 +9,23 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Cobalt.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="Converter" />
+            <DataTemplate x:Key="BlueHeader">
+                <StackPanel Orientation="Horizontal" Margin="-6,-6,-6,-6" Width="160">
+                    <StackPanel.Background>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#1F69D1" Offset="1"/>
+                            <GradientStop Color="#1F69D1" Offset="0.5"/>
+                            <GradientStop Color="#1F69D1" Offset="0.5"/>
+                        </LinearGradientBrush>
+                    </StackPanel.Background>
+                    <TextBlock Margin="10,10,10,10" Text="{Binding}" VerticalAlignment="Center"  Foreground="White"/>
+                </StackPanel>
+            </DataTemplate>
         </ResourceDictionary>
+
     </Application.Resources>
 </Application>

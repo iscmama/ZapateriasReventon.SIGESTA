@@ -13,6 +13,9 @@ namespace ZapateriasReventon.SIGESTA.Main.ViewModel
     public class MarcasViewModel : INotifyPropertyChanged
     {
         private ObservableCollection<MarcasModel> _MarcasList;
+        private bool _showAgregar;
+        private bool _showNuevo;
+        private bool _showActualizar;
 
         public MarcasViewModel()
         {
@@ -22,12 +25,38 @@ namespace ZapateriasReventon.SIGESTA.Main.ViewModel
             //};
 
             _MarcasList = new ObservableCollection<MarcasModel>();
+            _showAgregar = false;
+            _showNuevo = false;
+            _showActualizar = false;
         }
         public ObservableCollection<MarcasModel> MarcasList
         {
             get { return _MarcasList; }
             set { _MarcasList = value; OnPropertyChanged("MarcasList"); }
         }
+        public bool ShowAgregar
+        {
+            get { return _showAgregar; }
+            set { _showAgregar = value; OnPropertyChanged("ShowAgregar");
+            }
+        }
+        public bool ShowNuevo
+        {
+            get { return _showNuevo; }
+            set
+            {
+                _showNuevo = value; OnPropertyChanged("ShowNuevo");
+            }
+        }
+        public bool ShowActualizar
+        {
+            get { return _showActualizar; }
+            set
+            {
+                _showActualizar = value; OnPropertyChanged("ShowActualizar");
+            }
+        }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -40,6 +69,7 @@ namespace ZapateriasReventon.SIGESTA.Main.ViewModel
         }
 
         #endregion INotifyPropertyChanged Members
+
         private ICommand mUpdater;
         public ICommand UpdateCommand
         {
@@ -54,6 +84,7 @@ namespace ZapateriasReventon.SIGESTA.Main.ViewModel
                 mUpdater = value;
             }
         }
+        
         private class Updater : ICommand
         {
             #region ICommand Members

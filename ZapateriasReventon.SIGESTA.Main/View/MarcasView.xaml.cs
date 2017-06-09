@@ -75,9 +75,9 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
                     //this.MarcasGrid.ItemsSource = vm.MarcasList;
                     //this.MarcasGrid.DataContext 
+                    txtFilePath.Text = string.Empty;
+                    MessageBox.Show("Carga Exitosa", "SIGESTA");
                 }
-
-                MessageBox.Show("Carga Exitosa", "SIGESTA");
             }
             catch (Exception ex)
             {
@@ -88,6 +88,27 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             this.Close();
         }
-        
+        private void btnAgregar_Click(object sender, RoutedEventArgs e)
+        {
+            Reiniciar();
+            MarcasViewModel vm = (MarcasViewModel)this.DataContext;
+            vm.ShowAgregar = false;
+            vm.ShowNuevo = true;
+        }
+        private void btnNuevo_Click(object sender, RoutedEventArgs e)
+        {
+            Reiniciar();
+            MarcasViewModel vm = (MarcasViewModel)this.DataContext;
+            vm.ShowAgregar = true;
+            vm.ShowNuevo = false;
+        }
+        private void Reiniciar()
+        {
+            txtMarcaId.Text = string.Empty;
+            txtCodigo.Text = string.Empty;
+            txtMarca.Text = string.Empty;
+            txtFechaAlta.Text = string.Empty;
+            txtFechaModificacion.Text = string.Empty;
+        }
     }
 }
