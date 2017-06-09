@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ZapateriasReventon.SIGESTA.Main.View"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Catalogo de Marcas"  Height="485" Width="600" WindowStartupLocation="CenterScreen" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/Grid_16x16.png">
+        Title="Catalogo de Marcas"  Height="485" Width="600" WindowStartupLocation="CenterScreen" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/Grid_16x16.png" BorderThickness="1" BorderBrush="#0047AB">
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="{x:Type Button}" 
@@ -33,7 +33,7 @@
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="380">
                 <Label Content="Archivo" Grid.Row="2" HorizontalAlignment="Left" Name="lbla" />
                 <TextBox Height="30" Name="txtFilePath" Width="200" Margin="8,0,10,0" Opacity="1" IsReadOnly="True" />
-                <Button Content="SUBIR ARCHIVO" Name="btnOpen" Width="100" Height="23" Click="btnOpen_Click" Background="#FF2626" Foreground="White" />
+                <Button Content="Subir Archivo" Name="btnOpen" Width="110" Height="25" Click="btnOpen_Click" Style="{StaticResource MetroButton}"  />
             </WrapPanel>
         </StackPanel>
 
@@ -53,7 +53,7 @@
         <Button Visibility="{Binding ShowActualizar, Converter={StaticResource Converter}, FallbackValue=Hidden}" Content="Actualizar" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="205,80.4,0,0" Name="btnUpdate" VerticalAlignment="Top" Width="141" Command="{Binding Path=UpdateCommad}" Grid.Column="1" Grid.ColumnSpan="2" />
         <Button Visibility="{Binding ShowAgregar, Converter={StaticResource Converter}, FallbackValue=Hidden}" Content="Agregar" Grid.Row="2" Height="23" HorizontalAlignment="Left" Margin="205,120.4,0,0" Name="btnAgregar" VerticalAlignment="Top" Width="141"  Grid.Column="1" Grid.ColumnSpan="2" Click="btnAgregar_Click" />
         
-        <ListView Name="MarcasGrid" Grid.Row="2" Margin="4,178.4,12.6,13.2"  ItemsSource="{Binding MarcasList }" Grid.ColumnSpan="3"  >
+        <ListView Name="MarcasGrid" Grid.Row="2" Margin="4,178.4,12.6,13.2"  ItemsSource="{Binding MarcasList }" Grid.ColumnSpan="3" BorderBrush="Blue" BorderThickness="1"  >
             <ListView.View>
                 <GridView x:Name="grdTest">
                     <GridViewColumn Header="Id" DisplayMemberBinding="{Binding MarcaId}" Width="80" HeaderTemplate="{StaticResource BlueHeader}" />
@@ -66,8 +66,8 @@
         </ListView>
 
         <DockPanel Grid.Row="3" Grid.ColumnSpan="3" Width="500">
-            <Button Content="GUARDAR"  HorizontalAlignment="Center" Height="25" x:Name="btnGuardar" Width="141" Click="btnClose_Click" Background="#218500" Foreground="White" />
-            <Button Content="SALIR"  HorizontalAlignment="Center"  Height="25" x:Name="btnClose" Width="141" Click="btnClose_Click" Background="#A6A6A6" Foreground="White" />
+            <Button Content="Guardar"  HorizontalAlignment="Center" Height="25" x:Name="btnGuardar" Width="141" Click="btnClose_Click" Style="{StaticResource MetroButton}" />
+            <Button Content="Salir"  HorizontalAlignment="Center"  Height="25" x:Name="btnClose" Width="141" Click="btnClose_Click" Style="{StaticResource MetroButtonGrey}" />
         </DockPanel>
     </Grid>
 </controls:MetroWindow>

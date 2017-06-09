@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:ZapateriasReventon.SIGESTA.Main"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Sistema de Gestión de Almacenes" Height="600" Width="1000" WindowStartupLocation="CenterScreen" WindowStyle="ThreeDBorderWindow" Background="White">
+        Title="Sistema de Gestión de Almacenes" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="White" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/store32.png" BorderThickness="1" BorderBrush="#0047AB">
     <Grid>
         <Menu Height="35" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="503" >
             <MenuItem Header="_Catalogos " >
