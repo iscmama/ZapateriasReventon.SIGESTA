@@ -76,6 +76,12 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                     //this.MarcasGrid.ItemsSource = vm.MarcasList;
                     //this.MarcasGrid.DataContext 
                     txtFilePath.Text = string.Empty;
+
+                    if (vm.MarcasList.Count > 0)
+                    {
+                        vm.ShowActualizar = true;
+                    }
+
                     MessageBox.Show("Carga Exitosa", "SIGESTA");
                 }
             }
