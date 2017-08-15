@@ -66,7 +66,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\LecturasModel.cs" />
+    <Compile Include="ViewModel\LecturasViewModel.cs" />
     <Compile Include="ViewModel\MarcasViewModel.cs" />
+    <Compile Include="View\LecturasView.xaml.cs">
+      <DependentUpon>LecturasView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\MarcasView.xaml.cs">
       <DependentUpon>MarcasView.xaml</DependentUpon>
     </Compile>
@@ -83,6 +88,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Marcas.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\LecturasView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -49,7 +49,11 @@ namespace ZapateriasReventon.SIGESTA.Main
 
         private void Lectura_Click(object sender, RoutedEventArgs e)
         {
+            LecturasViewModel vm = new LecturasViewModel();
 
+            LecturasView lecturas = new LecturasView();
+            lecturas.DataContext = vm;
+            lecturas.ShowDialog();
         }
     }
 }
