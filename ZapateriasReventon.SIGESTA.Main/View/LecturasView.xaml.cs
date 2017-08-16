@@ -34,13 +34,13 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         }
         private void btnIniciar_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(txtAlmacen.Text.Trim()))
+            if (ddlAlmacen.SelectedValue == null)
             {
                 MessageBox.Show("Proporcione Almacén", "SIGESTA");
                 return;
             }
 
-            if (string.IsNullOrEmpty(txtEmpleado.Text.Trim()))
+            if (ddlEmpleado.SelectedValue == null)
             {
                 MessageBox.Show("Proporcione Empleado", "SIGESTA");
                 return;
@@ -81,6 +81,14 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                 return;
             }
 
+            if (txtCodigo.Text.Trim().Length != 16)
+            {   
+                MessageBox.Show("Código debe ser de 16 dígitos", "SIGESTA");
+                txtCodigo.Text = string.Empty;
+                txtCodigo.Focus();
+                return;
+            }
+
             AgregarItem(txtCodigo.Text.Trim());
             txtCodigo.Text = string.Empty;
             txtCodigo.Focus();
@@ -104,7 +112,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                     {
                         LecturasModel newLectura = new LecturasModel()
                         {
-                            Almacen = txtAlmacen.Text,
+                            Almacen = ((ComboBoxItem)ddlAlmacen.SelectedItem).Content.ToString(),
                             Codigo = codigo,
                             Nombre = string.Format("Producto {0}", seqProduct),
                             ProductoId = seqProduct,

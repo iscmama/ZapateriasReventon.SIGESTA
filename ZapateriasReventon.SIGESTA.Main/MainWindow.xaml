@@ -6,9 +6,16 @@
         xmlns:local="clr-namespace:ZapateriasReventon.SIGESTA.Main"
         mc:Ignorable="d"
         xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Sistema de Gestión de Almacenes" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="White" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/store32.png" BorderThickness="1" BorderBrush="#0047AB">
+        Title="Sistema de Gestión de Almacenes" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="White" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/logo.ico" BorderThickness="1" BorderBrush="#0047AB">
     <Grid>
-        <Menu Height="35" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="503" >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="211*"/>
+            <ColumnDefinition Width="779*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <ImageBrush ImageSource="/ZapateriasReventon.SIGESTA.Main;component/Images/logo.jpg"  Stretch="None"/>
+        </Grid.Background>
+        <Menu Height="35" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="503" Grid.ColumnSpan="2" >
             <MenuItem Header="_Catalogos " >
                 <MenuItem Header="_Marcas " Name="Marcas" Click="Marcas_Click" />
                 <MenuItem Header="_Modelos " Name="Modelos" Click="Modelos_Click" />

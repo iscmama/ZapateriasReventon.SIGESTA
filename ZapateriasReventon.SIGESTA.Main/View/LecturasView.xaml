@@ -6,12 +6,15 @@
         xmlns:local="clr-namespace:ZapateriasReventon.SIGESTA.Main.View"
         mc:Ignorable="d"
           xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="Lectura de Inventario"  Height="500" Width="600" WindowStartupLocation="CenterScreen" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/Grid_16x16.png" BorderThickness="1" BorderBrush="#0047AB">
+        Title="Lectura de Inventario"  Height="600" Width="700" WindowStartupLocation="CenterScreen" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/Grid_16x16.png" BorderThickness="1" BorderBrush="#0047AB">
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="{x:Type Button}" 
                        BasedOn="{StaticResource {x:Type Button}}">
                 <Setter Property="controls:ButtonHelper.PreserveTextCase" Value="True"/>
+            </Style>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
             </Style>
         </ResourceDictionary>
     </Window.Resources>
@@ -32,14 +35,22 @@
         <StackPanel HorizontalAlignment="Center" Grid.Row="0" Grid.ColumnSpan="3" Width="480" Name="spAlmacen">
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
                 <Label Content="Almacén:" Grid.Row="0" HorizontalAlignment="Left" Name="lblAlmacen" />
-                <TextBox Height="30" Name="txtAlmacen" Width="200" Margin="23,0,10,0" Opacity="1" />
+                <ComboBox Margin="23,0,10,0" Name="ddlAlmacen">
+                    <ComboBoxItem IsSelected="True" Content="Almacen 001"></ComboBoxItem>
+                    <ComboBoxItem Content="Almacen 002"></ComboBoxItem>
+                    <ComboBoxItem  Content="Almacen 003"></ComboBoxItem>
+                </ComboBox>
             </WrapPanel>
         </StackPanel>
         
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="3" Width="480" Name="spEmpleado" >
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
                 <Label Content="Empleado:" Grid.Row="1" HorizontalAlignment="Left" Name="lblEmpreado" />
-                <TextBox Height="30" Name="txtEmpleado" Width="200" Margin="16,0,10,0" Opacity="1" />
+                <ComboBox Margin="16,0,10,0" Name="ddlEmpleado">
+                    <ComboBoxItem IsSelected="True" Content="Gabriel Perez Gonzalez"></ComboBoxItem>
+                    <ComboBoxItem Content="Miguel Angel Martinez"></ComboBoxItem>
+                    <ComboBoxItem  Content="Empleado 001"></ComboBoxItem>
+                </ComboBox>
                 <Button Content="Iniciar" Name="btnIniciar" Width="100" Height="25" Click="btnIniciar_Click"  Style="{StaticResource MetroButton}"  />
             </WrapPanel>
         </StackPanel>
@@ -47,17 +58,17 @@
         <StackPanel HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="3" Width="480" Name="spCaptura" Visibility="Hidden">
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
                 <Label Content="Código" Grid.Row="2" HorizontalAlignment="Left" Name="lbla" />
-                <TextBox Height="30" Name="txtCodigo" MaxLength="16" Width="150" Margin="30,0,10,0" Opacity="1" Focusable="True" KeyUp="txtCodigo_KeyUp">
+                <TextBox Height="30" Name="txtCodigo" MaxLength="16" Width="130" Margin="30,0,10,0" Opacity="1" Focusable="True" KeyUp="txtCodigo_KeyUp">
                 </TextBox>
                 <Button Content="Agregar" Name="btnAgregar" Width="100" Height="25" Click="btnAgregar_Click"  Style="{StaticResource MetroButton}"  />
             </WrapPanel>
         </StackPanel>
 
-        <ListView Name="EscaneosGrid" Grid.Row="3" Margin="4,20,12.6,13.2"  ItemsSource="{Binding LecturasList }" Grid.ColumnSpan="3" BorderBrush="Blue" BorderThickness="1" Visibility="Hidden"  >
+        <ListView Name="EscaneosGrid" Grid.Row="3" Margin="4,20,12.6,13.2"  ItemsSource="{Binding LecturasList }" Grid.ColumnSpan="3" BorderBrush="Blue" BorderThickness="1" Visibility="Hidden" >
             <ListView.View>
                 <GridView x:Name="grdTest">
                     <GridViewColumn Header="Almacén" DisplayMemberBinding="{Binding Almacen}" Width="200" HeaderTemplate="{StaticResource BlueHeader}" />
-                    <GridViewColumn Header="Codigo" DisplayMemberBinding="{Binding Codigo}"  Width="100" HeaderTemplate="{StaticResource BlueHeader}" />
+                    <GridViewColumn Header="Codigo" DisplayMemberBinding="{Binding Codigo}"  Width="120" HeaderTemplate="{StaticResource BlueHeader}" />
                     <GridViewColumn Header="Nombre" DisplayMemberBinding="{Binding Nombre}" Width="200" HeaderTemplate="{StaticResource BlueHeader}" />
                     <GridViewColumn Header="Total" DisplayMemberBinding="{Binding Total}" Width="100" HeaderTemplate="{StaticResource BlueHeader}" />
                 </GridView>
