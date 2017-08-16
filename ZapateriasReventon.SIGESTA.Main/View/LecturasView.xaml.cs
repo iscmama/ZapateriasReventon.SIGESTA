@@ -58,6 +58,21 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         }
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
+            if (EscaneosGrid.Items.Count == 0)
+            {
+                MessageBox.Show("Debe realizar al menos 1 lectura", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            LecturasViewModel vm = (LecturasViewModel)this.DataContext;
+            List<LecturasModel> lecturas = vm.LecturasList.ToList();
+
+            ExportToExcel<LecturasModel, Lecturas> s = new ExportToExcel<LecturasModel, Lecturas>();
+            s.dataToPrint = lecturas;
+            s.GenerateReport();
+
+            MessageBox.Show("La información se guardo de forma exitosa", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Information);
+
             this.Close();
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
@@ -131,4 +146,6 @@ namespace ZapateriasReventon.SIGESTA.Main.View
             }
         }
     }
+
+    public class Lecturas : List<LecturasModel> { }
 }
