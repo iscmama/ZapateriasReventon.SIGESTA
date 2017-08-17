@@ -90,10 +90,9 @@ namespace ZapateriasReventon.SIGESTA.Main
                 {
                     var y = typeof(T).InvokeMember(header[i].ToString(), BindingFlags.GetProperty, null, item, null);
 
-                    if (i == 3)
+                    if (header[i].ToString() == "Codigo")
                     {
                         objData[j, i] = (y == null) ? "" : "'" + y.ToString();
-                        
                     }
                     else
                     {

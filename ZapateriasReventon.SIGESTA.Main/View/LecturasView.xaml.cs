@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using ZapateriasReventon.SIGESTA.Main.Model;
 using ZapateriasReventon.SIGESTA.Main.ViewModel;
+using ZapateriasReventon.SIGESTA.Main.Data;
 
 namespace ZapateriasReventon.SIGESTA.Main.View
 {
@@ -56,9 +57,22 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                     MessageBox.Show("Debe realizar al menos 1 lectura", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
-
+                
                 LecturasViewModel vm = (LecturasViewModel)this.DataContext;
                 List<LecturasModel> lecturas = vm.LecturasList.ToList();
+
+                string folio = string.Empty;
+
+                using (SIGESTARepository _repo = new SIGESTARepository())
+                {
+                    folio = _repo.AddLectura(lecturas);
+                }
+
+                if(string.IsNullOrEmpty(folio))
+                {
+                    MessageBox.Show("No se logro registrar la Lectura. Intente más tarde", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
 
                 ExportToExcel<LecturasModel, Lecturas> s = new ExportToExcel<LecturasModel, Lecturas>();
                 s.dataToPrint = lecturas;
@@ -181,7 +195,6 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                     foreach (LecturasModel lectura in lecturas)
                     {
                         writer.WriteLine(string.Format("{0},{1}", lectura.Codigo, lectura.Total));
-                        writer.WriteLine(Environment.NewLine);
                     }
 
                     writer.Close();

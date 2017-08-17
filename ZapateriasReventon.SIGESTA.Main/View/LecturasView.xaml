@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ZapateriasReventon.SIGESTA.Main.View"
         mc:Ignorable="d"
-          xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Lectura de Inventario"  Height="600" Width="700" WindowStartupLocation="CenterScreen" Icon="/ZapateriasReventon.SIGESTA.Main;component/Images/Grid_16x16.png" BorderThickness="1" BorderBrush="#0047AB">
     <Window.Resources>
         <ResourceDictionary>
@@ -37,14 +37,14 @@
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
                 <Label Content="Almacén:" Grid.Row="0" HorizontalAlignment="Left" Name="lblAlmacen" />
                 <ComboBox Margin="23,0,10,0" Name="ddlAlmacen">
-                    <ComboBoxItem IsSelected="True" Content="REVENTON 1"></ComboBoxItem>
-                    <ComboBoxItem Content="REVENTON 2"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 3"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 4"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 5"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 6"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 7"></ComboBoxItem>
-                    <ComboBoxItem  Content="REVENTON 8"></ComboBoxItem>
+                    <ComboBoxItem IsSelected="True" Content="REVENTON_1"></ComboBoxItem>
+                    <ComboBoxItem Content="REVENTON_2"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_3"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_4"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_5"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_6"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_7"></ComboBoxItem>
+                    <ComboBoxItem  Content="REVENTON_8"></ComboBoxItem>
                 </ComboBox>
             </WrapPanel>
         </StackPanel>

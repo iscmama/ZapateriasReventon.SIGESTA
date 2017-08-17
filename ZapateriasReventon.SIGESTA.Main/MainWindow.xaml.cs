@@ -55,5 +55,14 @@ namespace ZapateriasReventon.SIGESTA.Main
             lecturas.DataContext = vm;
             lecturas.ShowDialog();
         }
+
+        private void Reporte_Click(object sender, RoutedEventArgs e)
+        {
+            ReporteLecturasViewModel vm = new ReporteLecturasViewModel();
+
+            ReporteLecturasView reporte = new ReporteLecturasView();
+            reporte.DataContext = vm;
+            reporte.ShowDialog();
+        }
     }
 }

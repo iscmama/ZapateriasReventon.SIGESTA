@@ -23,7 +23,7 @@
             <MenuItem Header="_Inventario ">
                 <MenuItem Header="_Lectura " Name="Lectura" Click="Lectura_Click" />
             </MenuItem>
-            <MenuItem Header="_Reporte " />
+            <MenuItem Header="_Reporte " Name="Reporte" Click="Reporte_Click" />
             <MenuItem Header="_Salir " Name="Salir" Click="Salir_Click" />
         </Menu>
     </Grid>
