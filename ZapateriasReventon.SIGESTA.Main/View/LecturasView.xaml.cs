@@ -1,33 +1,22 @@
 ﻿using MahApps.Metro.Controls;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.OleDb;
+using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ZapateriasReventon.SIGESTA.Main.Model;
 using ZapateriasReventon.SIGESTA.Main.ViewModel;
 
 namespace ZapateriasReventon.SIGESTA.Main.View
 {
-    /// <summary>
-    /// Interaction logic for LecturasView.xaml
-    /// </summary>
     public partial class LecturasView : MetroWindow
     {
         private DateTime inicioEscaneo { get; set; }
         private int seqProduct { get; set; }
-
         public LecturasView()
         {
             InitializeComponent();
@@ -46,6 +35,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                 return;
             }
 
+            spCantidad.Visibility = Visibility.Visible;
             spCaptura.Visibility = Visibility.Visible;
             EscaneosGrid.Visibility = Visibility.Visible;
             dpAcciones.Visibility = Visibility.Visible;
@@ -54,26 +44,36 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
             inicioEscaneo = DateTime.Now;
             seqProduct = 1;
+            txtCantidad.Text = "1";
             txtCodigo.Focus();
         }
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if (EscaneosGrid.Items.Count == 0)
+            try
             {
-                MessageBox.Show("Debe realizar al menos 1 lectura", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
+                if (EscaneosGrid.Items.Count == 0)
+                {
+                    MessageBox.Show("Debe realizar al menos 1 lectura", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    return;
+                }
+
+                LecturasViewModel vm = (LecturasViewModel)this.DataContext;
+                List<LecturasModel> lecturas = vm.LecturasList.ToList();
+
+                ExportToExcel<LecturasModel, Lecturas> s = new ExportToExcel<LecturasModel, Lecturas>();
+                s.dataToPrint = lecturas;
+                s.GenerateReport();
+
+                CreateTxt(lecturas);
+
+                MessageBox.Show("La información se guardo de forma exitosa", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                this.Close();
             }
-
-            LecturasViewModel vm = (LecturasViewModel)this.DataContext;
-            List<LecturasModel> lecturas = vm.LecturasList.ToList();
-
-            ExportToExcel<LecturasModel, Lecturas> s = new ExportToExcel<LecturasModel, Lecturas>();
-            s.dataToPrint = lecturas;
-            s.GenerateReport();
-
-            MessageBox.Show("La información se guardo de forma exitosa", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Information);
-
-            this.Close();
+            catch (Exception)
+            {
+                MessageBox.Show("No se logro guardar la información. Intente más tarde", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
@@ -83,6 +83,15 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             if (e.Key == Key.Enter)
             {
+                if (string.IsNullOrEmpty(txtCantidad.Text.Trim()))
+                {
+                    MessageBox.Show("Proporcione Cantidad", "SIGESTA");
+                    txtCodigo.Text = string.Empty;
+                    txtCantidad.Text = string.Empty;
+                    txtCantidad.Focus();
+                    return;
+                }
+
                 AgregarItem((sender as TextBox).Text);
                 (sender as TextBox).Text = string.Empty;
                 (sender as TextBox).Focus();
@@ -90,9 +99,20 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         }
         private void btnAgregar_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(txtCantidad.Text.Trim()))
+            {
+                MessageBox.Show("Proporcione Cantidad", "SIGESTA");
+                txtCantidad.Text = string.Empty;
+                txtCodigo.Text = string.Empty;
+                txtCantidad.Focus();
+                return;
+            }
+
             if (string.IsNullOrEmpty(txtCodigo.Text.Trim()))
             {
                 MessageBox.Show("Proporcione Código", "SIGESTA");
+                txtCodigo.Text = string.Empty;
+                txtCodigo.Focus();
                 return;
             }
 
@@ -121,7 +141,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
                     if (encontrado != null)
                     {
-                        encontrado.Total++;
+                        encontrado.Total+= Convert.ToInt32(txtCantidad.Text.Trim());
                     }
                     else
                     {
@@ -131,7 +151,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                             Codigo = codigo,
                             Nombre = string.Format("Producto {0}", seqProduct),
                             ProductoId = seqProduct,
-                            Total = 1,
+                            Total = Convert.ToInt32(txtCantidad.Text.Trim()),
                             Fecha = DateTime.Now
                         };
 
@@ -145,7 +165,35 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                 throw;
             }
         }
-    }
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void CreateTxt(List<LecturasModel> lecturas)
+        {
+            try
+            {
+                string appPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + ((ComboBoxItem)ddlAlmacen.SelectedItem).Content.ToString() + "_Inventario_" + DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt";
 
+                using (StreamWriter writer = new StreamWriter(appPath , true))
+                {
+                    foreach (LecturasModel lectura in lecturas)
+                    {
+                        writer.WriteLine(string.Format("{0},{1}", lectura.Codigo, lectura.Total));
+                        writer.WriteLine(Environment.NewLine);
+                    }
+
+                    writer.Close();
+                }
+
+                System.Diagnostics.Process.Start("notepad.exe", appPath);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+    }
     public class Lecturas : List<LecturasModel> { }
 }
