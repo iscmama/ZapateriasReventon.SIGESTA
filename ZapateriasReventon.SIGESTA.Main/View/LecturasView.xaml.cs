@@ -26,13 +26,13 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             if (ddlAlmacen.SelectedValue == null)
             {
-                MessageBox.Show("Proporcione Almacén", "SIGESTA");
+                MessageBox.Show("Proporcione Almacén", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
             if (ddlEmpleado.SelectedValue == null)
             {
-                MessageBox.Show("Proporcione Empleado", "SIGESTA");
+                MessageBox.Show("Proporcione Empleado", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -99,7 +99,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
             {
                 if (string.IsNullOrEmpty(txtCantidad.Text.Trim()))
                 {
-                    MessageBox.Show("Proporcione Cantidad", "SIGESTA");
+                    MessageBox.Show("Proporcione Cantidad", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                     txtCodigo.Text = string.Empty;
                     txtCantidad.Text = string.Empty;
                     txtCantidad.Focus();
@@ -107,6 +107,9 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                 }
 
                 AgregarItem((sender as TextBox).Text);
+                Add.IsChecked = true;
+                Del.IsChecked = false;
+                txtCantidad.Text = "1";
                 (sender as TextBox).Text = string.Empty;
                 (sender as TextBox).Focus();
             }
@@ -115,7 +118,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             if (string.IsNullOrEmpty(txtCantidad.Text.Trim()))
             {
-                MessageBox.Show("Proporcione Cantidad", "SIGESTA");
+                MessageBox.Show("Proporcione Cantidad", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtCantidad.Text = string.Empty;
                 txtCodigo.Text = string.Empty;
                 txtCantidad.Focus();
@@ -124,7 +127,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
             if (string.IsNullOrEmpty(txtCodigo.Text.Trim()))
             {
-                MessageBox.Show("Proporcione Código", "SIGESTA");
+                MessageBox.Show("Proporcione Código", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtCodigo.Text = string.Empty;
                 txtCodigo.Focus();
                 return;
@@ -132,13 +135,16 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
             if (txtCodigo.Text.Trim().Length != 16)
             {   
-                MessageBox.Show("Código debe ser de 16 dígitos", "SIGESTA");
+                MessageBox.Show("Código debe ser de 16 dígitos", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtCodigo.Text = string.Empty;
                 txtCodigo.Focus();
                 return;
             }
 
             AgregarItem(txtCodigo.Text.Trim());
+            Add.IsChecked = true;
+            Del.IsChecked = false;
+            txtCantidad.Text = "1";
             txtCodigo.Text = string.Empty;
             txtCodigo.Focus();
         }
@@ -146,6 +152,8 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             try
             {
+                int i = Convert.ToInt32(txtCantidad.Text.Trim()) * (Add.IsChecked.Value ? 1 : Del.IsChecked.Value ? -1 : 1);
+
                 LecturasViewModel vm = (LecturasViewModel)this.DataContext;
                 ObservableCollection<LecturasModel> lecturas = vm.LecturasList;
 
@@ -155,17 +163,31 @@ namespace ZapateriasReventon.SIGESTA.Main.View
 
                     if (encontrado != null)
                     {
-                        encontrado.Total+= Convert.ToInt32(txtCantidad.Text.Trim());
+                        encontrado.Total += i;
+
+                        if (encontrado.Total <= 0)
+                        {
+                            vm.LecturasList.Remove(encontrado);
+                        }
                     }
                     else
                     {
+                        if (i <= 0)
+                        {
+                            MessageBox.Show("No hay elementos que quitar", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
+                            txtCodigo.Text = string.Empty;
+                            txtCantidad.Text = string.Empty;
+                            txtCantidad.Focus();
+                            return;
+                        }
+
                         LecturasModel newLectura = new LecturasModel()
                         {
                             Almacen = ((ComboBoxItem)ddlAlmacen.SelectedItem).Content.ToString(),
                             Codigo = codigo,
                             Nombre = string.Format("Producto {0}", seqProduct),
                             ProductoId = seqProduct,
-                            Total = Convert.ToInt32(txtCantidad.Text.Trim()),
+                            Total = i,
                             Fecha = DateTime.Now
                         };
 

@@ -27,7 +27,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
             <RowDefinition Height="80"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="30"/>
@@ -50,7 +50,7 @@
         </StackPanel>
         
         <StackPanel HorizontalAlignment="Center" Grid.Row="1" Grid.ColumnSpan="3" Width="480" Name="spEmpleado" >
-            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
+            <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="480">
                 <Label Content="Empleado:" Grid.Row="1" HorizontalAlignment="Left" Name="lblEmpreado" />
                 <ComboBox Margin="16,0,10,0" Name="ddlEmpleado">
                     <ComboBoxItem IsSelected="True" Content="JAIRO QUIAHUIXTLE LOPEZ"></ComboBoxItem>
@@ -59,10 +59,12 @@
             </WrapPanel>
         </StackPanel>
 
-        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="3" Width="480" Name="spCantidad" Visibility="Hidden" >
+        <StackPanel HorizontalAlignment="Center" Grid.Row="2" Grid.ColumnSpan="3" Width="500" Name="spCantidad" Visibility="Hidden">
             <WrapPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="400">
-                <Label Content="Cantidad" Grid.Row="2" HorizontalAlignment="Left" Name="lblCantidad" />
-                <TextBox Height="30" Name="txtCantidad" MaxLength="5" Width="50" Margin="20,0,10,0" Opacity="1" Focusable="True" Text="1" PreviewTextInput="NumberValidationTextBox">
+                <RadioButton GroupName="Operacion" Content="Agregar" IsChecked="True" Name="Add"  VerticalAlignment="Center"/>
+                <RadioButton GroupName="Operacion" Content="Quitar" Name="Del" HorizontalContentAlignment="Stretch"/>
+                <Label Content="Cantidad" Margin="15,0,10,0" Grid.Row="2" HorizontalAlignment="Left" Name="lblCantidad" />
+                <TextBox Height="30" Name="txtCantidad" MaxLength="5" Width="50" Margin="0,0,10,0" Opacity="1" Focusable="True" Text="1" PreviewTextInput="NumberValidationTextBox">
                 </TextBox>
             </WrapPanel>
         </StackPanel>
