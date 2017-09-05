@@ -21,7 +21,41 @@ namespace ZapateriasReventon.SIGESTA.Main.Data
 
             try
             {
-                folio = "SIGESTA_" + listaLecturas.First().Almacen + "_" + DateTime.Now.ToString("ddMMyyyhhmmssms");
+                string pref = string.Empty;
+                string almacen = listaLecturas.First().Almacen;
+
+                switch (almacen)
+                {
+                    case "REVENTON_1":
+                        pref = "R1";
+                        break;
+                    case "REVENTON_2":
+                        pref = "R2";
+                        break;
+                    case "REVENTON_3":
+                        pref = "R3";
+                        break;
+                    case "REVENTON_4":
+                        pref = "R4";
+                        break;
+                    case "REVENTON_5":
+                        pref = "R5";
+                        break;
+                    case "REVENTON_6":
+                        pref = "R6";
+                        break;
+                    case "REVENTON_7":
+                        pref = "R7";
+                        break;
+                    case "REVENTON_8":
+                        pref = "R8";
+                        break;
+                    default:
+                        pref = "RX";
+                        break;
+                }
+
+                folio = pref + DateTime.Now.ToString("ddMMyymm");
 
                 foreach (LecturasModel l in listaLecturas)
                 {

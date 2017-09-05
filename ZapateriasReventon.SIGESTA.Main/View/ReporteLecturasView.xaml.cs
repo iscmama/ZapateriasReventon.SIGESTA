@@ -47,13 +47,61 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         {
             try
             {
-                string appPath = AppDomain.CurrentDomain.BaseDirectory + "\\" + lecturas.First().Almacen + "_Inventario_" + DateTime.Now.ToString("dd-MM-yyyy-HH-mm-ss") + ".txt";
+                string pref = string.Empty;
+                string almacen = lecturas.FirstOrDefault().Almacen;
+
+                switch (almacen)
+                {
+                    case "REVENTON_1":
+                        pref = "R1";
+                        break;
+                    case "REVENTON_2":
+                        pref = "R2";
+                        break;
+                    case "REVENTON_3":
+                        pref = "R3";
+                        break;
+                    case "REVENTON_4":
+                        pref = "R4";
+                        break;
+                    case "REVENTON_5":
+                        pref = "R5";
+                        break;
+                    case "REVENTON_6":
+                        pref = "R6";
+                        break;
+                    case "REVENTON_7":
+                        pref = "R7";
+                        break;
+                    case "REVENTON_8":
+                        pref = "R8";
+                        break;
+                    default:
+                        pref = "RX";
+                        break;
+                }
+
+                string baseDirectory = @"C:\Escaneos";
+
+                if (!Directory.Exists(baseDirectory))
+                {
+                    Directory.CreateDirectory(baseDirectory);
+                }
+
+                string appPath = baseDirectory + @"\" + pref + DateTime.Now.ToString("ddMMyymm") + ".txt";
 
                 using (StreamWriter writer = new StreamWriter(appPath, true))
                 {
                     foreach (LecturasModel lectura in lecturas)
                     {
-                        writer.WriteLine(string.Format("{0},{1}", lectura.Codigo, lectura.Total));
+                        if (!lectura.Equals(lecturas[lecturas.Count - 1]))
+                        {
+                            writer.WriteLine(string.Format("{0},{1}", lectura.Codigo, lectura.Total));
+                        }
+                        else
+                        {
+                            writer.Write(string.Format("{0},{1}", lectura.Codigo, lectura.Total));
+                        }
                     }
 
                     writer.Close();
