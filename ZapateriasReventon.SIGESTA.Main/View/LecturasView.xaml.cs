@@ -40,13 +40,16 @@ namespace ZapateriasReventon.SIGESTA.Main.View
             spCaptura.Visibility = Visibility.Visible;
             EscaneosGrid.Visibility = Visibility.Visible;
             dpAcciones.Visibility = Visibility.Visible;
+            spUltimaLectura.Visibility = Visibility.Visible;
+
             spAlmacen.Visibility = Visibility.Hidden;
-            spEmpleado.Visibility = Visibility.Hidden;
+            spEmpleado.Visibility = Visibility.Hidden;            
 
             inicioEscaneo = DateTime.Now;
             seqProduct = 1;
             txtCantidad.Text = "1";
             txtCodigo.Focus();
+            txtUltimaLectura.Text = string.Empty;
         }
         private void btnGuardar_Click(object sender, RoutedEventArgs e)
         {
@@ -91,7 +94,19 @@ namespace ZapateriasReventon.SIGESTA.Main.View
         }
         private void btnClose_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            if (EscaneosGrid.Items.Count > 0)
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("¿Esta seguro de salir sin guardar este inventario", "Confirmar Salida", System.Windows.MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    this.Close();
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
         private void txtCodigo_KeyUp(object sender, KeyEventArgs e)
         {
@@ -102,6 +117,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                     MessageBox.Show("Proporcione Cantidad", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                     txtCodigo.Text = string.Empty;
                     txtCantidad.Text = string.Empty;
+                    txtUltimaLectura.Text = string.Empty;
                     txtCantidad.Focus();
                     return;
                 }
@@ -121,6 +137,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                 MessageBox.Show("Proporcione Cantidad", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                 txtCantidad.Text = string.Empty;
                 txtCodigo.Text = string.Empty;
+                txtUltimaLectura.Text = string.Empty;
                 txtCantidad.Focus();
                 return;
             }
@@ -128,6 +145,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
             if (string.IsNullOrEmpty(txtCodigo.Text.Trim()))
             {
                 MessageBox.Show("Proporcione Código", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtUltimaLectura.Text = string.Empty;
                 txtCodigo.Text = string.Empty;
                 txtCodigo.Focus();
                 return;
@@ -136,6 +154,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
             if (txtCodigo.Text.Trim().Length != 16)
             {   
                 MessageBox.Show("Código debe ser de 16 dígitos", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtUltimaLectura.Text = string.Empty;
                 txtCodigo.Text = string.Empty;
                 txtCodigo.Focus();
                 return;
@@ -177,6 +196,7 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                             MessageBox.Show("No hay elementos que quitar", "SIGESTA", MessageBoxButton.OK, MessageBoxImage.Warning);
                             txtCodigo.Text = string.Empty;
                             txtCantidad.Text = string.Empty;
+                            txtUltimaLectura.Text = string.Empty;
                             txtCantidad.Focus();
                             return;
                         }
@@ -190,6 +210,8 @@ namespace ZapateriasReventon.SIGESTA.Main.View
                             Total = i,
                             Fecha = DateTime.Now
                         };
+
+                        txtUltimaLectura.Text = codigo;
 
                         vm.LecturasList.Add(newLectura);
                         seqProduct++;
